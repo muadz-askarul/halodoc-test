@@ -1,0 +1,42 @@
+<div class="container card p-4 m-4">
+  <button [routerLink]="['/']">Back</button>
+  @defer {
+  <h1 class="bold ellipsis">
+    {{ postData()?.title }}
+  </h1>
+
+  <p>{{ postData()?.body }}</p>
+
+  <div class="d-flex" style="flex-direction: column; justify-content: end">
+    <div>
+      <div>{{ userData()?.name }}</div>
+      <div>{{ userData()?.address?.city }}</div>
+      <div>Email: {{ userData()?.email }}</div>
+      <div>Phone: {{ userData()?.phone }}</div>
+    </div>
+  </div>
+
+  <div>
+    @for (comment of commentList(); track $index) {
+    <div class="d-flex space-between w-100">
+      <div>{{ comment.body }}</div>
+      <button (click)="setCommentParent(comment.id)">Reply</button>
+    </div>
+    @for (reply of comment.replies; track $index) {
+    <div>{{ reply }}</div>
+    <button>Reply</button>
+    } }
+  </div>
+  <div class="my-4">
+    <input
+      type="text"
+      class="form-control"
+      id="commentInput"
+      [(ngModel)]="commentString"
+    />
+    <button (click)="addComment(commentString)">Add Commnet</button>
+  </div>
+  } @loading {
+  <h1>Loading...</h1>
+  }
+</div>
